@@ -26,6 +26,10 @@ app.get("/api/health", (_req, res) => {
   });
 });
 
+app.get("/", (_req, res) => {
+  res.json({ name: "Doctor Tracker API", health: "/api/health" });
+});
+
 app.use("/api", routes);
 
 // Must be last
