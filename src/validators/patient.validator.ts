@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { optionalDate, optionalString, paginationFields, phoneSchema } from "./common";
+import { optionalDate, optionalObjectId, optionalString, paginationFields, phoneSchema } from "./common";
 
 export const createPatientSchema = z.object({
     name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
@@ -10,11 +10,18 @@ export const createPatientSchema = z.object({
     visitDate: optionalDate,
 });
 
+// Edit: every field optional, but at least one must be sent.
+// Unknown fields (like doctor or _id) are stripped by Zod, so they can't be changed through this route.
+export const updatePatientSchema = createPatientSchema
+    .partial()
+    .refine((data) => Object.keys(data).length > 0, "Provide at least one field to update");
+
 export const listPatientsQuerySchema = z.object({
     ...paginationFields,
     search: optionalString,
     condition: optionalString,
     gender: z.preprocess((v) => (v === "" ? undefined : v), z.enum(["male", "female", "other"]).optional()),
+    doctor: optionalObjectId,
     from: optionalDate,
     to: optionalDate,
 });

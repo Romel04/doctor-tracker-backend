@@ -3,6 +3,7 @@ import {
     addPatientToDoctor,
     createDoctor,
     getDoctor,
+    getDoctorFilters,
     listDoctorPatients,
     listDoctors,
 } from "../controllers/doctor.controller";
@@ -16,6 +17,8 @@ router
     .route("/")
     .get(validate(listDoctorsQuerySchema, "query"), listDoctors)
     .post(validate(createDoctorSchema), createDoctor);
+
+router.get("/filters", getDoctorFilters);
 
 router.get("/:id", getDoctor);
 

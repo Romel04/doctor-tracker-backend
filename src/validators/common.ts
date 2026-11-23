@@ -15,3 +15,6 @@ export const paginationFields = {
     page: z.coerce.number().int().min(1).default(1),
     limit: z.coerce.number().int().min(1).max(100).default(10),
 };
+
+export const objectIdString = z.string().regex(/^[0-9a-fA-F]{24}$/, "Invalid id");
+export const optionalObjectId = z.preprocess(emptyToUndefined, objectIdString.optional());

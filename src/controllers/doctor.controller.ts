@@ -88,3 +88,12 @@ export const addPatientToDoctor = asyncHandler(async (req, res) => {
     const patient = await Patient.create({ ...req.body, doctor: req.params.id });
     res.status(201).json({ patient });
 });
+
+// Values for the filter dropdowns on the Doctors page
+export const getDoctorFilters = asyncHandler(async (_req, res) => {
+    const [specializations, hospitals] = await Promise.all([
+        Doctor.distinct("specialization"),
+        Doctor.distinct("hospital"),
+    ]);
+    res.json({ specializations: specializations.sort(), hospitals: hospitals.sort() });
+});
