@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { optionalDate, optionalObjectId, optionalString, paginationFields, phoneSchema } from "./common";
+import { nameSchema, optionalDate, optionalObjectId, optionalString, paginationFields, phoneSchema } from "./common";
 
 export const createPatientSchema = z.object({
-    name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
+    name: nameSchema,
     age: z.coerce.number().int().min(0, "Age must be 0 or more").max(130),
     gender: z.enum(["male", "female", "other"]),
     phone: phoneSchema,

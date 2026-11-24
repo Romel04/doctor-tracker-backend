@@ -1,8 +1,8 @@
 import { z } from "zod";
-import { optionalDate, optionalString, paginationFields, phoneSchema } from "./common";
+import { nameSchema, optionalDate, optionalString, paginationFields, phoneSchema } from "./common";
 
 export const createDoctorSchema = z.object({
-    name: z.string().trim().min(2, "Name must be at least 2 characters").max(100),
+    name: nameSchema,
     specialization: z.string().trim().min(2, "Specialization is required").max(100),
     hospital: z.string().trim().min(2, "Hospital is required").max(150),
     phone: phoneSchema,
